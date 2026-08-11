@@ -1246,15 +1246,7 @@ export default function Home() {
               <select
                 aria-label="Seniorita"
                 value={seniority}
-                onChange={(event) => {
-                  const nextSeniority = event.target.value as Seniority;
-                  setSeniority(nextSeniority);
-                  setSubmitted((current) => ({
-                    ...current,
-                    seniority: nextSeniority,
-                  }));
-                  setActiveTab("courses");
-                }}
+                onChange={(event) => setSeniority(event.target.value as Seniority)}
               >
                 <option value="junior">Junior</option>
                 <option value="medior">Medior</option>
