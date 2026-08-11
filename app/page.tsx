@@ -907,30 +907,93 @@ const roleCoursePriority: Record<string, string[]> = {
   general: ["productivity", "communication-self-defense", "influential-comms", "project-minimum", "cyber-security", "mental-resilience", "conflicts", "excel", "project-atoz", "task-assignment"],
 };
 
+const seniorityStageScore: Record<Seniority, Record<Stage, number>> = {
+  junior: {
+    "Zakotvit základy": 14,
+    "Rozšířit dovednosti": 5,
+    "Použít v praxi": 7,
+  },
+  medior: {
+    "Zakotvit základy": 6,
+    "Rozšířit dovednosti": 11,
+    "Použít v praxi": 9,
+  },
+  senior: {
+    "Zakotvit základy": 1,
+    "Rozšířit dovednosti": 11,
+    "Použít v praxi": 14,
+  },
+};
+
+const seniorityCourseScore: Record<Seniority, Record<string, number>> = {
+  junior: {
+    "leader-start": 12,
+    "task-assignment": 8,
+    "project-minimum": 6,
+    productivity: 5,
+    "communication-self-defense": 4,
+    "leadership-max": -5,
+  },
+  medior: {
+    "manager-tips": 6,
+    "leadership-max": 5,
+    "task-assignment": 4,
+    conflicts: 4,
+    "influential-comms": 4,
+    "project-atoz": 3,
+    "leader-start": 2,
+  },
+  senior: {
+    "leadership-max": 12,
+    "manager-tips": 8,
+    "influential-comms": 7,
+    conflicts: 6,
+    "project-atoz": 5,
+    "mental-resilience": 4,
+    "task-assignment": -3,
+    "project-minimum": -4,
+    "leader-start": -9,
+  },
+};
+
 export function chooseCourses(profileKey: string, seniority: Seniority) {
   const priority = roleCoursePriority[profileKey] ?? roleCoursePriority.general;
+  const priorityPosition = new Map(priority.map((id, index) => [id, index]));
+  const relevantCourses = courses.filter(
+    (course) =>
+      priorityPosition.has(course.id) ||
+      course.tags.includes(profileKey) ||
+      course.tags.includes("general"),
+  );
 
-  const roleCourses = priority
-    .map((id, index) => {
-      const course = courses.find((item) => item.id === id);
-      const seniorityBoost =
-        course &&
-        ((seniority === "junior" && course.stage === "Zakotvit základy") ||
-          (seniority === "senior" && course.stage === "Použít v praxi"))
-          ? 0.25
-          : 0;
+  const roleCourses = relevantCourses
+    .map((course) => {
+      const index = priorityPosition.get(course.id);
+      const rolePriorityScore =
+        index === undefined ? 0 : (priority.length - index) * 3;
+      const roleTagScore = course.tags.includes(profileKey) ? 8 : 0;
+      const transferableScore = course.tags.includes("general") ? 1 : 0;
+      const stageScore = seniorityStageScore[seniority][course.stage];
+      const courseScore = seniorityCourseScore[seniority][course.id] ?? 0;
 
-      return course ? { course, score: priority.length - index + seniorityBoost } : null;
+      return {
+        course,
+        score:
+          rolePriorityScore +
+          roleTagScore +
+          transferableScore +
+          stageScore +
+          courseScore,
+      };
     })
-    .filter((item): item is { course: Course; score: number } => item !== null)
     .sort((a, b) => b.score - a.score)
     .map(({ course }) => course);
 
   const primary = roleCourses.slice(0, 9);
   const secondaryIds = [
     "ai-maxikurz",
-    roleCourses[9]?.id,
     "mental-resilience",
+    ...roleCourses.slice(9).map((course) => course.id),
     "communication-self-defense",
     "cyber-security",
     "productivity",
@@ -1183,7 +1246,15 @@ export default function Home() {
               <select
                 aria-label="Seniorita"
                 value={seniority}
-                onChange={(event) => setSeniority(event.target.value as Seniority)}
+                onChange={(event) => {
+                  const nextSeniority = event.target.value as Seniority;
+                  setSeniority(nextSeniority);
+                  setSubmitted((current) => ({
+                    ...current,
+                    seniority: nextSeniority,
+                  }));
+                  setActiveTab("courses");
+                }}
               >
                 <option value="junior">Junior</option>
                 <option value="medior">Medior</option>

@@ -46,3 +46,38 @@ test("different professions receive distinct skill-based course plans", async ()
     await vite.close();
   }
 });
+
+test("seniority changes the recommended leadership plan", async () => {
+  const vite = await createServer({
+    configFile: false,
+    root: process.cwd(),
+    server: { middlewareMode: true },
+    appType: "custom",
+    logLevel: "silent",
+  });
+
+  try {
+    const { chooseCourses } = await vite.ssrLoadModule("/app/page.tsx");
+    const junior = chooseCourses("manager", "junior");
+    const medior = chooseCourses("manager", "medior");
+    const senior = chooseCourses("manager", "senior");
+
+    for (const courses of [junior, medior, senior]) {
+      assert.equal(courses.length, 12);
+      assert.equal(new Set(courses.map((course) => course.id)).size, 12);
+    }
+
+    assert.notDeepEqual(junior.slice(0, 5).map((course) => course.id), medior.slice(0, 5).map((course) => course.id));
+    assert.notDeepEqual(medior.slice(0, 5).map((course) => course.id), senior.slice(0, 5).map((course) => course.id));
+    assert.notDeepEqual(junior.map((course) => course.id), senior.map((course) => course.id));
+
+    assert.ok(junior.slice(0, 5).some((course) => course.id === "leader-start"));
+    assert.ok(senior.slice(0, 3).some((course) => course.id === "leadership-max"));
+    assert.ok(
+      senior.findIndex((course) => course.id === "leadership-max") <
+        junior.findIndex((course) => course.id === "leadership-max"),
+    );
+  } finally {
+    await vite.close();
+  }
+});
