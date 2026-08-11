@@ -86,16 +86,23 @@ button {
 
 .brand-mark {
   align-items: center;
-  background: #fff;
-  border-radius: 50%;
-  color: var(--pink);
+  background: #17151a;
+  border-radius: 4px;
+  color: #fff;
   display: inline-flex;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 900;
   height: 34px;
   justify-content: center;
-  text-transform: lowercase;
+  letter-spacing: -.08em;
+  line-height: 1;
   width: 34px;
+}
+
+.brand-mark::after {
+  color: #f1d51c;
+  content: ".";
+  margin-left: 1px;
 }
 
 .verified-pill,
