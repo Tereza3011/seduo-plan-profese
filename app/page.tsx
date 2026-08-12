@@ -1152,7 +1152,8 @@ export default function Home() {
       <header className="hero">
         <nav className="topbar">
           <a className="brand" href="#top" aria-label="Seduo Plán domů">
-            <img className="brand-logo" src="./seduo-cz-logo.png" alt="Seduo.cz" />
+            <span className="brand-mark" aria-hidden="true">S</span>
+            <span>seduo plán</span>
           </a>
           <div className="verified-pill"><span>✓</span> Ověřený katalog</div>
         </nav>
@@ -1562,7 +1563,7 @@ export default function Home() {
       </div>
 
       <footer>
-        <div className="footer-brand"><img className="brand-logo" src="./seduo-cz-logo.png" alt="Seduo.cz" /></div>
+        <div className="footer-brand"><span className="brand-mark" aria-hidden="true">S</span><strong>Seduo Plán</strong></div>
         <p>Doporučení vychází pouze z ručně ověřených detailů kurzů a lekcí. Před přiřazením vždy zkontrolujte ověřovací zdroj.</p>
         <a href={CATALOG_URL} target="_blank" rel="noreferrer">Seznam kurzů Seduo.cz ↗</a>
       </footer>
