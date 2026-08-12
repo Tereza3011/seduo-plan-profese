@@ -1104,8 +1104,6 @@ export default function Home() {
 
   function selectRole(nextRole: string) {
     setRole(nextRole);
-    setSubmitted({ role: nextRole, seniority });
-    setActiveTab("courses");
     setRoleMenuOpen(false);
   }
 
