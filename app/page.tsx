@@ -1029,16 +1029,19 @@ function chooseMicrolearning(profileKey: string) {
 }
 
 export default function Home() {
-  const [role, setRole] = useState("L&D specialista");
-  const [seniority, setSeniority] = useState<Seniority>("medior");
-  const [submitted, setSubmitted] = useState({ role, seniority });
+  const [draftRole, setDraftRole] = useState("L&D specialista");
+  const [draftSeniority, setDraftSeniority] = useState<Seniority>("medior");
+  const [planSelection, setPlanSelection] = useState({
+    role: "L&D specialista",
+    seniority: "medior" as Seniority,
+  });
   const [activeTab, setActiveTab] = useState<ContentTab>("courses");
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
 
-  const profile = useMemo(() => findProfile(submitted.role), [submitted.role]);
+  const profile = useMemo(() => findProfile(planSelection.role), [planSelection.role]);
   const selectedCourses = useMemo(
-    () => chooseCourses(profile.key, submitted.seniority),
-    [profile.key, submitted.seniority],
+    () => chooseCourses(profile.key, planSelection.seniority),
+    [profile.key, planSelection.seniority],
   );
   const selectedMicrolearning = useMemo(
     () => chooseMicrolearning(profile.key),
@@ -1095,15 +1098,15 @@ export default function Home() {
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    if (role.trim()) {
-      setSubmitted({ role: role.trim(), seniority });
+    if (draftRole.trim()) {
+      setPlanSelection({ role: draftRole.trim(), seniority: draftSeniority });
       setActiveTab("courses");
       setRoleMenuOpen(false);
     }
   }
 
   function selectRole(nextRole: string) {
-    setRole(nextRole);
+    setDraftRole(nextRole);
     setRoleMenuOpen(false);
   }
 
@@ -1111,7 +1114,7 @@ export default function Home() {
     junior: "Junior",
     medior: "Medior",
     senior: "Senior",
-  }[submitted.seniority];
+  }[planSelection.seniority];
 
   const renderCourseCard = (course: Course, priority: "Hlavní volba" | "Doplňkový kurz") => (
     <article className={`course-card ${priority === "Hlavní volba" ? "course-card-primary" : ""}`} key={course.id}>
@@ -1183,9 +1186,9 @@ export default function Home() {
               <div className="role-picker">
                 <input
                   id="role"
-                  value={role}
+                  value={draftRole}
                   onChange={(event) => {
-                    setRole(event.target.value);
+                    setDraftRole(event.target.value);
                     setRoleMenuOpen(true);
                   }}
                   onFocus={() => setRoleMenuOpen(true)}
@@ -1242,8 +1245,8 @@ export default function Home() {
               </div>
               <select
                 aria-label="Seniorita"
-                value={seniority}
-                onChange={(event) => setSeniority(event.target.value as Seniority)}
+                value={draftSeniority}
+                onChange={(event) => setDraftSeniority(event.target.value as Seniority)}
               >
                 <option value="junior">Junior</option>
                 <option value="medior">Medior</option>
@@ -1270,7 +1273,7 @@ export default function Home() {
           <div className="result-heading">
             <div>
               <p className="section-number">VZDĚLÁVACÍ PLÁN</p>
-              <h2>{submitted.role}</h2>
+              <h2>{planSelection.role}</h2>
             </div>
             <p className="source-stamp">Ověřeno {VERIFIED_AT}<strong>{seniorityLabel}</strong></p>
           </div>

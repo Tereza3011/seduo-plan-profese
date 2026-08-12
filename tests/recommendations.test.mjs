@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { createServer } from "vite";
 
@@ -80,4 +81,21 @@ test("seniority changes the recommended leadership plan", async () => {
   } finally {
     await vite.close();
   }
+});
+
+test("draft role and seniority update the plan only after form submission", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const submitHandler = source.slice(
+    source.indexOf("function submit("),
+    source.indexOf("function selectRole("),
+  );
+  const roleHandler = source.slice(
+    source.indexOf("function selectRole("),
+    source.indexOf("const seniorityLabel"),
+  );
+
+  assert.match(submitHandler, /setPlanSelection/);
+  assert.match(submitHandler, /draftRole\.trim\(\)/);
+  assert.match(submitHandler, /draftSeniority/);
+  assert.doesNotMatch(roleHandler, /setPlanSelection|setActiveTab/);
 });
