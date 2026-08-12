@@ -84,25 +84,11 @@ button {
   text-decoration: none;
 }
 
-.brand-mark {
-  align-items: center;
-  background: #24152b;
-  border-radius: 4px;
-  color: #fff;
-  display: inline-flex;
-  font-size: 18px;
-  font-weight: 900;
-  height: 34px;
-  justify-content: center;
-  letter-spacing: -.08em;
-  line-height: 1;
-  width: 34px;
-}
-
-.brand-mark::after {
-  color: #f1d51c;
-  content: ".";
-  margin-left: 1px;
+.brand-logo {
+  display: block;
+  height: 36px;
+  object-fit: contain;
+  width: auto;
 }
 
 .verified-pill,
