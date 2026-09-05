@@ -83,6 +83,33 @@ test("seniority changes the recommended leadership plan", async () => {
   }
 });
 
+test("every professional profile receives five verified microlearning lessons", async () => {
+  const vite = await createServer({
+    configFile: false,
+    root: process.cwd(),
+    server: { middlewareMode: true },
+    appType: "custom",
+    logLevel: "silent",
+  });
+
+  try {
+    const { chooseMicrolearning } = await vite.ssrLoadModule("/app/page.tsx");
+    const profileKeys = ["manager", "project", "production", "hr", "ld", "sales", "it", "marketing", "assistant", "operations"];
+
+    for (const profileKey of profileKeys) {
+      const lessons = chooseMicrolearning(profileKey);
+      assert.equal(lessons.length, 5, `${profileKey} receives a five-day microlearning selection`);
+      assert.equal(new Set(lessons.map((lesson) => lesson.title)).size, 5);
+    }
+
+    assert.ok(
+      chooseMicrolearning("ld").some((lesson) => lesson.title === "Jak si správně říct o pomoc"),
+    );
+  } finally {
+    await vite.close();
+  }
+});
+
 test("draft role and seniority update the plan only after form submission", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const submitHandler = source.slice(

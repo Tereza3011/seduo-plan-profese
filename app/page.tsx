@@ -1014,7 +1014,7 @@ export function chooseCourses(profileKey: string, seniority: Seniority) {
   return [...primary, ...secondary];
 }
 
-function chooseMicrolearning(profileKey: string) {
+export function chooseMicrolearning(profileKey: string) {
   const exactMatches = microlearning.filter((item) => item.tags.includes(profileKey));
   const transferableSkills = microlearning.filter((item) => item.tags.includes("general"));
   const verifiedSelection = [...exactMatches, ...transferableSkills].filter(
@@ -1025,7 +1025,7 @@ function chooseMicrolearning(profileKey: string) {
       ) === index,
   );
 
-  return verifiedSelection.slice(0, 4);
+  return verifiedSelection.slice(0, 5);
 }
 
 export default function Home() {

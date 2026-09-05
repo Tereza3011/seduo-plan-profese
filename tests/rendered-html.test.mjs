@@ -43,7 +43,7 @@ test("server-renders the finished Seduo planning assistant", async () => {
   assert.match(html, /400\+/);
   assert.match(html, /300\+/);
   assert.match(html, /Videokurzy<b>12<\/b>/);
-  assert.match(html, /Microlearning<b>4<\/b>/);
+  assert.match(html, /Microlearning<b>5<\/b>/);
   assert.match(html, /Maxikurz umělé inteligence: kompletní průvodce AI světem/);
   assert.match(html, /95 % · 462 hodnocení/);
   assert.match(html, /Jednoduchá 6měsíční vzdělávací cesta/);
