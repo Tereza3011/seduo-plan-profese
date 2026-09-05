@@ -498,13 +498,13 @@ const seduoResources = [
     description: "Krátké praktické microkurzy; vyžaduje licenci Seduo + Microlearning.",
     url: "https://www.seduo.cz/stranka/microlearning",
   },
-  {
-    icon: "▶",
-    title: "Seznámení se Seduo",
-    description: "Desetiminutové video pro nové studenty.",
-    url: "https://www.loom.com/share/6ffda844578343cd805457c6ba90b5e1",
-  },
 ];
+
+const seduoUserGuide = {
+  url: "https://www.loom.com/share/6ffda844578343cd805457c6ba90b5e1",
+  title: "Průvodce Seduo pro nové uživatele",
+  description: "Krátké desetiminutové video vás provede prostředím Seduo a ukáže, jak začít se studiem.",
+};
 
 const contentTabs: { key: ContentTab; label: string; icon: string }[] = [
   { key: "courses", label: "Videokurzy", icon: "🎬" },
@@ -1541,8 +1541,8 @@ export default function Home() {
               <div className="section-icon resources">↗</div>
               <div>
                 <p className="section-number">OFICIÁLNÍ ZDROJE SEDUO</p>
-                <h2>Další formáty pro vzdělávací plán</h2>
-                <span>Ověřené rozcestníky pro doplnění kurzu o živé, krátké nebo navazující formáty.</span>
+                <h2>Formáty a zdroje Seduo</h2>
+                <span>Ověřené rozcestníky pro kurzy, živé, krátké a navazující vzdělávací formáty.</span>
               </div>
             </div>
             <div className="resources-grid">
@@ -1558,6 +1558,20 @@ export default function Home() {
                 </a>
               ))}
             </div>
+            <a
+              className="seduo-user-guide"
+              href={seduoUserGuide.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="seduo-user-guide-icon" aria-hidden="true">▶</span>
+              <div>
+                <small>ZAČÍNÁTE SE SEDUO?</small>
+                <h3>{seduoUserGuide.title}</h3>
+                <p>{seduoUserGuide.description}</p>
+              </div>
+              <strong>Spustit průvodce <span aria-hidden="true">↗</span></strong>
+            </a>
           </section>
         </section>
       </div>

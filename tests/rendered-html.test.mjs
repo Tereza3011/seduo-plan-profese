@@ -50,6 +50,9 @@ test("server-renders the finished Seduo planning assistant", async () => {
   assert.match(html, /Wellbeing a odolnost/);
   assert.match(html, /Komunikační sebeobrana: reagujte pohotově v každé situaci/);
   assert.match(html, /TOP 1 · KVĚTEN 2026/);
+  assert.match(html, /Formáty a zdroje Seduo/);
+  assert.match(html, /Průvodce Seduo pro nové uživatele/);
+  assert.match(html, /ZAČÍNÁTE SE SEDUO\?/);
   assert.match(html, /href="https:\/\/www\.seduo\.cz\/kategorie\/hr-pravo"/);
   assert.match(html, /href="https:\/\/www\.seduo\.cz\/kategorie\/leadership"/);
   assert.match(html, /href="https:\/\/www\.seduo\.cz\/kategorie\/komunikace"/);

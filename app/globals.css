@@ -1440,6 +1440,69 @@ button {
   color: var(--violet);
 }
 
+.seduo-user-guide {
+  align-items: center;
+  background: linear-gradient(135deg, #f5edf9, #fff 70%);
+  border: 1px solid #dbc9e6;
+  border-radius: 18px;
+  color: var(--ink);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 52px 1fr auto;
+  margin-top: 18px;
+  padding: 20px 22px;
+  text-decoration: none;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+
+.seduo-user-guide:hover {
+  border-color: #b890ce;
+  box-shadow: 0 14px 32px rgba(56, 19, 72, .1);
+  transform: translateY(-2px);
+}
+
+.seduo-user-guide-icon {
+  align-items: center;
+  background: var(--violet-dark);
+  border-radius: 14px;
+  color: #fff;
+  display: flex;
+  font-size: 17px;
+  height: 52px;
+  justify-content: center;
+  width: 52px;
+}
+
+.seduo-user-guide small {
+  color: var(--violet);
+  display: block;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 1px;
+  margin-bottom: 5px;
+}
+
+.seduo-user-guide h3 {
+  font-size: 16px;
+  margin: 0 0 5px;
+}
+
+.seduo-user-guide p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.seduo-user-guide > strong {
+  background: var(--violet);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 10px;
+  padding: 11px 14px;
+  white-space: nowrap;
+}
+
 footer {
   align-items: center;
   background: linear-gradient(135deg, #24102f, #351347 58%, #421650);
@@ -1587,6 +1650,16 @@ footer > a {
     align-items: flex-start;
     flex-direction: column;
     padding: 22px;
+  }
+
+  .seduo-user-guide {
+    align-items: flex-start;
+    grid-template-columns: 52px 1fr;
+  }
+
+  .seduo-user-guide > strong {
+    grid-column: 1 / -1;
+    text-align: center;
   }
 
   .format-portal-image {
