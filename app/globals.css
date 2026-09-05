@@ -1442,8 +1442,8 @@ button {
 
 footer {
   align-items: center;
-  background: #24212a;
-  color: #bdb8c5;
+  background: linear-gradient(135deg, #24102f, #351347 58%, #421650);
+  color: #d8cfdf;
   display: grid;
   font-size: 10px;
   gap: 35px;
