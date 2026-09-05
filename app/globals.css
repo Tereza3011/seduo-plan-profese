@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --violet: #9828d3;
-  --violet-dark: #7020b5;
-  --pink: #d83b9a;
-  --coral: #ef5b78;
+  --violet: #57206f;
+  --violet-dark: #381348;
+  --pink: #a8327d;
+  --coral: #d54d70;
   --ink: #22212a;
   --muted: #6d6976;
   --background: #f7f6fa;
@@ -44,7 +44,7 @@ button {
 .hero {
   background:
     radial-gradient(circle at 83% 18%, rgba(255,255,255,.14) 0 2px, transparent 3px) 0 0 / 24px 24px,
-    linear-gradient(135deg, #7d27ce 0%, #be36b5 45%, #ef5d79 100%);
+    linear-gradient(135deg, #351347 0%, #5b206f 45%, #b93d6d 100%);
   color: #fff;
   overflow: hidden;
   position: relative;
